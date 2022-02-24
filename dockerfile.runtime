@@ -1,0 +1,32 @@
+
+
+FROM alpine as installer
+
+LABEL maintainer "sudiplamsal.00@gmail.com"
+
+ARG BASE_FILE
+ARG TOMCAT_VERSION=9.0.58
+ARG JAVA_VERSION=8
+
+RUN apk update && apk upgrade && apk add wget curl vim zlib python3 py3-pip ca-certificates && update-ca-certificates 
+
+RUN apk add openjdk${JAVA_VERSION} --repository=http://dl-cdn.alpinelinux.org/alpine/edge/community && \
+    mkdir -p /deployments/ && \
+    chown root:root /deployments
+
+WORKDIR /deployments/
+
+RUN if [[ "${BASE_FILE}" = "war" ]]; then wget https://dlcdn.apache.org/tomcat/tomcat-9/v${TOMCAT_VERSION}/bin/apache-tomcat-${TOMCAT_VERSION}.tar.gz && \
+    mkdir -p /deployments/tomcat/ && \
+    tar -C /deployments/tomcat -xvzf /deployments/apache-tomcat-${TOMCAT_VERSION}.tar.gz --strip-components=1 && \
+    rm -rf *.tar.gz; \
+    fi
+# Install AWS CLI v1
+RUN pip3 install awscli && \
+     aws --version
+
+RUN rm -rf /var/cache/apk/*
+
+
+
+

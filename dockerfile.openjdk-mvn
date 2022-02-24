@@ -1,0 +1,26 @@
+FROM alpine as build
+
+LABEL maintainer "sudiplamsal.00@gmail.com"
+
+ARG MAVEN_VERSION=3.8.4
+ARG USER_HOME_DIR="/root"
+ARG BASE_URL=https://dlcdn.apache.org/maven/maven-3/${MAVEN_VERSION}/binaries
+
+WORKDIR /usr/share/
+
+RUN apk update && apk upgrade && apk add wget curl vim gcc zlib zlib-dev libc-dev && \
+    apk add openjdk8 --repository=http://dl-cdn.alpinelinux.org/alpine/edge/community && \
+    mkdir -p /usr/share/maven && \
+    mkdir -p /usr/share/graalvm && \
+    wget ${BASE_URL}/apache-maven-${MAVEN_VERSION}-bin.tar.gz && \
+    tar -C /usr/share/maven -xvzf apache-maven-${MAVEN_VERSION}-bin.tar.gz --strip-components=1 && \
+    ln -s /usr/share/maven/bin/mvn /usr/bin/mvn && \
+    mkdir -p /build/ && \
+    rm -rf /usr/share/*.tar.gz \
+            /usr/share/*.apk \
+           /tmp/* /var/cache/apk/*
+
+#COPY settings.xml /usr/share/maven/conf/
+
+ENV MAVEN_HOME /usr/share/maven \
+    MAVEN_CONFIG "${USER_HOME_DIR}/.m2"
