@@ -18,15 +18,16 @@ RUN ls /build/target/
 FROM installer:1.0 
 COPY run.sh /run.sh
 COPY --from=builder /build/target/ /tmp/
+USER root
+RUN export FILE_NAME=$BASE_FILE
 
-RUN if [[ "$BASE_FILE" = "war" ]] ; then rm -rf /deployments/tomcat/webapps/ && \
+RUN if [[ "$(echo $FILE_NAME)" = "war" ]] ; then rm -rf /deployments/tomcat/webapps/ && \
     cp /tmp/*.war /deployments/tomcat/webapps/ ;  \
-    else /tmp/*jar /deployment/ ; \
+    else cp /tmp/*jar /deployments/ ; \
     fi
-RUN ls -al /deployments/tomcat/webapps/ && chmod +x /run.sh
+RUN echo $FILE_NAME
+RUN ls -al /deployments/ && chmod +x /run.sh
 
 EXPOSE 8080
-
-USER root
 
 ENTRYPOINT ["sh", "/run.sh"]
