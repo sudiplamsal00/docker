@@ -30,4 +30,4 @@ RUN ls -al /deployments/ && chmod +x /run.sh
 
 EXPOSE 8080
 
-ENTRYPOINT ["sh", "/run.sh"]
+ENTRYPOINT ["sh", "/entrypoint.sh"]
