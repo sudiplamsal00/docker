@@ -2,7 +2,7 @@ FROM alpine as build
 
 LABEL maintainer "sudiplamsal.00@gmail.com"
 
-ARG MAVEN_VERSION=3.8.4
+ARG MAVEN_VERSION=3.8.6
 ARG USER_HOME_DIR="/root"
 ARG BASE_URL=https://dlcdn.apache.org/maven/maven-3/${MAVEN_VERSION}/binaries
 

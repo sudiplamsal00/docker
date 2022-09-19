@@ -1,10 +1,10 @@
 ARG BASE_FILE
-FROM custom_maven:3.8.4 as build_war
+FROM custom_maven:3.8.6 as build_war
 WORKDIR /build/
 COPY hello-world-war/src /build/src
 COPY hello-world-war/pom.xml /build/
 
-FROM custom_maven:3.8.4 as build_jar
+FROM custom_maven:3.8.6 as build_jar
 WORKDIR /build/
 COPY spring-boot-hello-world/src /build/src
 COPY spring-boot-hello-world/pom.xml /build/
