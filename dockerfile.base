@@ -22,9 +22,6 @@ RUN if [[ "${BASE_FILE}" = "war" ]]; then wget https://dlcdn.apache.org/tomcat/t
     rm -rf *.tar.gz; \
     fi
 # Install AWS CLI v1
-RUN pip3 install awscli && \
-     aws --version
-
 RUN rm -rf /var/cache/apk/*
 
 

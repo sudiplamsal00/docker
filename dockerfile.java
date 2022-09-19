@@ -14,7 +14,7 @@ RUN ls -al /build/src/
 RUN mvn -f pom.xml clean package
 RUN ls /build/target/
 
-FROM installer:1.0 
+FROM base_installer:1.0 
 ARG BASE_FILE
 COPY run.sh /run.sh
 COPY --from=builder /build/target/ /tmp/
