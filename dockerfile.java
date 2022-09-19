@@ -16,11 +16,11 @@ RUN ls /build/target/
 
 FROM base_installer:1.0 
 ARG BASE_FILE
-COPY run.sh /run.sh
+COPY entrypoint.sh /entrypoint.sh
 COPY --from=builder /build/target/ /tmp/
 USER root
 ENV FILE_NAME=${BASE_FILE}
-RUN ls -al /deployments/tomcat/webapps/ && ls -al /tmp/*
+RUN ls -al /deployments/ && ls -al /tmp/*
 RUN if [[ "$(echo $FILE_NAME)" = "war" ]] ; then rm -rf /deployments/tomcat/webapps/* && \
     cp /tmp/*.war /deployments/tomcat/webapps/ ;  \
     else cp /tmp/*jar /deployments/ ; \
