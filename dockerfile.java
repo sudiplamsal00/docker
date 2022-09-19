@@ -26,7 +26,7 @@ RUN if [[ "$(echo $FILE_NAME)" = "war" ]] ; then rm -rf /deployments/tomcat/weba
     else cp /tmp/*jar /deployments/ ; \
     fi
 RUN echo $FILE_NAME
-RUN ls -al /deployments/ && chmod +x /run.sh
+RUN ls -al /deployments/ && chmod +x /entrypoint.sh
 
 EXPOSE 8080
 
